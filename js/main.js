@@ -1,7 +1,6 @@
 $(function() {
 	//setup the draggable content containers
 	$(".content-container").draggable({
-		//"containment": $("#content-grid-container"), //this seems buggy?
 		"distance": 10,
 		"handle": "h1",
 		"helper": "clone",
@@ -26,6 +25,7 @@ $(function() {
 
 	//setup the dropzones
 	$(".content-column").droppable({
+		"greedy": false,
 		"scope": "widget",
 		"tolerance": "pointer",
 		"drop": function(event, ui) {
@@ -33,7 +33,25 @@ $(function() {
 			console.log(["drop", event, ui]);
 		},
 		"over": function(event, ui) {
-			$(event.target).css("background-color", "hsla(0, 0%, 100%, 0.4);");
+			$(event.target).css("background-color", "hsla(0, 100%, 100%, 0.4);");
+			console.log(["over", event, ui]);
+		},
+		"out": function(event, ui) {
+			$(event.target).css("background-color", "");
+			console.log(["out", event, ui]);
+		}
+	});
+
+	$(".content-container-bounding-box").droppable({
+		"greedy": true,
+		"scope": "widget",
+		"tolerance": "pointer",
+		"drop": function(event, ui) {
+			$(event.target).css("background-color", "");
+			console.log(["drop", event, ui]);
+		},
+		"over": function(event, ui) {
+			$(event.target).css("background-color", "hsla(0, 100%, 50%, 0.4);");
 			console.log(["over", event, ui]);
 		},
 		"out": function(event, ui) {

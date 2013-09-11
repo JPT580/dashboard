@@ -70,10 +70,13 @@ h5 {	font-size: 11pt;	}
 	margin-bottom: 0em;	
 }
 
+.content-container-bounding-box {
+	padding: 1em 1em 2em 1em;
+}
+
 .content-container {
 	padding-top: 0.3em;
 	padding-bottom: 0.3em;
-	margin: 1em 1em 2em 1em;
 	color: hsla(0, 0%, 10%, 0.9);
 	background-color: hsla(0, 0%, 100%, 0.8);
 	border-radius: 5px;
