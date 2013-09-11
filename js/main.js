@@ -1,6 +1,6 @@
 $(function() {
 	//setup the draggable content containers
-	$(".content-container").draggable({
+	$(".content-container-bounding-box").draggable({
 		"distance": 10,
 		"handle": "h1",
 		"helper": "clone",
@@ -29,16 +29,15 @@ $(function() {
 		"scope": "widget",
 		"tolerance": "pointer",
 		"drop": function(event, ui) {
-			$(event.target).css("background-color", "");
-			console.log(["drop", event, ui]);
+			$("#draggable-temporary-clone").remove();
+			$(ui.draggable[0]).prependTo(event.target);
 		},
 		"over": function(event, ui) {
-			$(event.target).css("background-color", "hsla(0, 100%, 100%, 0.4);");
-			console.log(["over", event, ui]);
+			$("#draggable-temporary-clone").remove();
+			$(ui.draggable[0]).clone(true).attr("id", "draggable-temporary-clone").prependTo(event.target);
 		},
 		"out": function(event, ui) {
-			$(event.target).css("background-color", "");
-			console.log(["out", event, ui]);
+			$("#draggable-temporary-clone").remove();
 		}
 	});
 
@@ -47,16 +46,15 @@ $(function() {
 		"scope": "widget",
 		"tolerance": "pointer",
 		"drop": function(event, ui) {
-			$(event.target).css("background-color", "");
-			console.log(["drop", event, ui]);
+			$("#draggable-temporary-clone").remove();
+			$(ui.draggable[0]).insertAfter(event.target);
 		},
 		"over": function(event, ui) {
-			$(event.target).css("background-color", "hsla(0, 100%, 50%, 0.4);");
-			console.log(["over", event, ui]);
+			$("#draggable-temporary-clone").remove();
+			$(ui.draggable[0]).clone(true).attr("id", "draggable-temporary-clone").insertAfter(event.target);
 		},
 		"out": function(event, ui) {
-			$(event.target).css("background-color", "");
-			console.log(["out", event, ui]);
+			$("#draggable-temporary-clone").remove();
 		}
 	});
 
