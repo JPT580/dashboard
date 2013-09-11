@@ -115,6 +115,10 @@ h5 {	font-size: 11pt;	}
 	background-attachment: fixed;
 }
 
+#wrap-all {
+	height: 100%;
+}
+
 #wrap-nonfooter-content {
 	min-height: 100%;
 }
