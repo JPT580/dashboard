@@ -1,13 +1,13 @@
 @font-face {
 	font-family: Sintony;
-	src: url('sintony/Sintony-Regular.ttf');
+	src: url('font/Sintony-Regular.ttf');
 	font-style: normal;
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: Sintony_Bold;
-	src: url('sintony/Sintony-Bold.ttf');
+	src: url('font/Sintony-Bold.ttf');
 	font-style: normal;
 	font-weight: bold;
 }
@@ -27,7 +27,8 @@ html, body {
 }
 
 body {
-	background-color: #FF00FF; /* Development only! */
+	/* background-color: #FF00FF; */ /* Development only! */
+	background-color: hsla(0, 0%, 50%, 1);
 	font-family: Sintony, sans-serif;
 	font-size: 10pt;
 }
@@ -96,7 +97,7 @@ h5 {	font-size: 11pt;	}
 	min-height: 100%;
 	background-color: hsla(0, 0%, 50%, 1);
 	/* epic background image or something like that */
-	background: url('bkg01.jpg');
+	background: url('img/bkg01.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
