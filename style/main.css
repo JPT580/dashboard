@@ -121,7 +121,7 @@ h5 {	font-size: 11pt;	}
 
 #nonfooter-content-container {
 	overflow: auto;
-	padding-bottom: 10em; /* footer height */
+	padding-bottom: 150px; /* footer height */
 }
 
 #headerbar {
@@ -140,8 +140,8 @@ h5 {	font-size: 11pt;	}
 }
 
 #footer {
-	height: 7em; /* footer height */
-	margin-top: -7em; /* footer height */
+	height: 150px; /* footer height */
+	margin-top: -150px; /* footer height */
 	color: hsla(0, 0%, 90%, 0.9);
 	background-color: hsla(0, 0%, 0%, 0.75);
 	
