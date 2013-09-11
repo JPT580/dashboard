@@ -1,6 +1,4 @@
 $(function() {
-	console.log("I'm alive!");
-
 	//setup the draggable content containers
 	$(".content-container").draggable({
 		//"containment": $("#content-grid-container"), //this seems buggy?
