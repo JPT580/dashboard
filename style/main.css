@@ -76,6 +76,10 @@ h5 {	font-size: 11pt;	}
 	padding-bottom: 2em;
 }
 
+.content-container-bounding-box:last-child {
+	padding-bottom: 4em;
+}
+
 .content-container {
 	padding-top: 0.3em;
 	padding-bottom: 0.3em;
@@ -139,8 +143,8 @@ h5 {	font-size: 11pt;	}
 }
 
 #content-grid-container {
-	margin-left: 1em;
-	margin-right: 1em;
+	margin-left: 2em;
+	margin-right: 2em;
 }
 
 #footer {
