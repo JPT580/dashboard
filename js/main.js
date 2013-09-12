@@ -1,4 +1,9 @@
 $(function() {
+
+	$(".content-container-header").each(function() {
+		$(this).css("background-color", "hsla(" + Math.round(Math.random() * 360) + ", 100%, 50%, 1);");
+	});
+
 	//setup the draggable content containers
 	$(".content-container-bounding-box").draggable({
 		"distance": 10,

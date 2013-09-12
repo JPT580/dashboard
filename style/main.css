@@ -80,25 +80,37 @@ h5 {	font-size: 11pt;	}
 	padding-bottom: 4em;
 }
 
-.content-container {
-	padding-top: 0.3em;
-	padding-bottom: 0.3em;
+.content-container-header {
+	cursor: move;
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+	padding-top: 5px; /* see border-radius */
+	padding-bottom: 0em;
 	color: hsla(0, 0%, 10%, 0.9);
-	background-color: hsla(0, 0%, 100%, 0.8);
-	border-radius: 5px;
+	background-color: hsla(0, 0%, 65%, 0.75);
+	border-radius: 5px 5px 0px 0px;
 }
 
-.content-container h1 {
-	margin-top: 5px; /* see border-radius of .content-container */
-	padding-left: 0.5em;
-	padding-right: 0.5em;
-	background-color: hsla(0, 100%, 100%, 0.3);
+.content-container-header h1 {
 	color: hsla(0, 0%, 25%, 1);
 }
 
-.content-container p {
-	margin: 0.5em 0.75em 1em 0.75em;
+.content-container-body {
+	padding: 0.5em 0.75em 1em 0.75em;
+	color: hsla(0, 0%, 10%, 0.9);
+	background-color: hsla(0, 0%, 100%, 0.8);
+	border-radius: 0px 0px 5px 5px;
+}
+
+.content-container-body p {
 	color: hsla(0, 0%, 5%, 1);
+}
+
+.droppable-container-placeholder {
+	border-width: 2px 2px 2px 2px;
+	border-style: dashed;
+	border-color: hsla(0, 0%, 33%, 0.75);
+	margin-bottom: 2em;
 }
 
 #wallpaper {
