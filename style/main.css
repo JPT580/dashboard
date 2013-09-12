@@ -49,6 +49,10 @@ h5 {	font-size: 11pt;	}
 	clear: both;
 }
 
+.hidden {
+	display: none;
+}
+
 .vertical-list {
 	list-style: none;
 	clear: left;
@@ -70,6 +74,7 @@ h5 {	font-size: 11pt;	}
 
 .content-column {
 	padding: 2em 1em 0em 1em;
+	min-height: 300px;
 }
 
 .content-container-bounding-box {

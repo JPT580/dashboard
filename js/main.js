@@ -13,14 +13,14 @@ $(function() {
 		"revertDuration": 50,
 		"scope": "widget",
 		"scroll": false,
-		"snap": true,
+		"snap": false,
 		"start": function(event, ui) {
 			//set width and height of dragged clone to originals dimensions
 			$(ui.helper[0]).width(event.target.clientWidth).height(event.target.clientHeight);
 			//change opacity of original to indicate it is being dragged
-			$(event.target).css("opacity", "0.3");
+			$(event.target).css("opacity", "0.25");
 			//also change opacity of dragged clone to help the user see
-			$(ui.helper[0]).css("opacity", "0.3");
+			$(ui.helper[0]).css("opacity", "0.5");
 		},
 		"stop": function(event, ui) {
 			//reset opacity of original
@@ -29,23 +29,31 @@ $(function() {
 	});
 
 	//setup the dropzones
+	//put the dragged object into first position of a column
 	$(".content-column").droppable({
 		"greedy": false,
 		"scope": "widget",
 		"tolerance": "pointer",
 		"drop": function(event, ui) {
 			$("#draggable-temporary-clone").remove();
-			$(ui.draggable[0]).prependTo(event.target);
+			$(ui.draggable[0]).prependTo($(event.target));
 		},
 		"over": function(event, ui) {
 			$("#draggable-temporary-clone").remove();
-			$(ui.draggable[0]).clone(true).attr("id", "draggable-temporary-clone").prependTo(event.target);
+			//create a placeholder and mark it with an id (so we can remove it later)
+			$(".droppable-container-placeholder")
+				.clone(true)
+				.width(ui.draggable[0].clientWidth)
+				.height(ui.draggable[0].clientHeight)
+				.attr("id", "draggable-temporary-clone")
+				.prependTo(event.target);
 		},
 		"out": function(event, ui) {
 			$("#draggable-temporary-clone").remove();
 		}
 	});
 
+	//put the dragged object into a slot after the object it was dropped on
 	$(".content-container-bounding-box").droppable({
 		"greedy": true,
 		"scope": "widget",
@@ -56,7 +64,13 @@ $(function() {
 		},
 		"over": function(event, ui) {
 			$("#draggable-temporary-clone").remove();
-			$(ui.draggable[0]).clone(true).attr("id", "draggable-temporary-clone").insertAfter(event.target);
+			//create a placeholder and mark it with an id (so we can remove it later)
+			$(".droppable-container-placeholder")
+				.clone(true)
+				.width(ui.draggable[0].clientWidth)
+				.height(ui.draggable[0].clientHeight)
+				.attr("id", "draggable-temporary-clone")
+				.insertAfter(event.target);
 		},
 		"out": function(event, ui) {
 			$("#draggable-temporary-clone").remove();
