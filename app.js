@@ -5,6 +5,7 @@ var fs = require("fs");
 var http = require("http");
 var https = require("https");
 var log4js = require("log4js");
+var scrypt = require("scrypt");
 
 //load settings
 var settings = require("./src/Settings.js");
@@ -38,7 +39,7 @@ app.use(express.static(__dirname + '/static'));
 
 //serve random fun stuff on /ohai ;-)
 app.use("/ohai", function(req, res) {
-	res.send("ohai!");
+	res.status(200).send("ohai!");
 });
 
 //define 404 for everything else (ugly but i think it's useful)
