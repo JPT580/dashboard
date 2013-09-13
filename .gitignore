@@ -3,3 +3,4 @@ snakeoil/*.pem
 snakeoil/*.csr
 settings.json
 !settings.json.template
+*.log
