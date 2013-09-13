@@ -9,7 +9,8 @@
 	"repository": "git://github.com/JPT580/dashboard.git",
 	"author": "Jan Philipp Timme <jan.philipp@timme.it>",
 	"dependencies": {
-		"express": "*"
+		"express": "*",
+		"cradle": "*"
 	},
 	"devDependencies": {},
 	"engines": {
