@@ -1,0 +1,27 @@
+{
+	"name": "dashboard",
+	"version": "0.0.1",
+	"description": "iGoogle-like dashboard",
+	"keywords": [
+		"web",
+		"dashboard"
+	],
+	"repository": "git://github.com/JPT580/dashboard.git",
+	"author": "Jan Philipp Timme <jan.philipp@timme.it>",
+	"dependencies": {
+		"express": "*"
+	},
+	"devDependencies": {},
+	/*
+	"licenses": [{
+		"type": "MIT",
+		"url": "https://raw.github.com/senchalabs/connect/master/LICENSE"
+	}],
+	*/
+	"engines": {
+		"node": ">= 0.8.0"
+	},
+	"scripts": {
+		"start": "node app.js"
+	}
+}
