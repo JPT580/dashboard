@@ -10,7 +10,9 @@
 	"author": "Jan Philipp Timme <jan.philipp@timme.it>",
 	"dependencies": {
 		"express": "*",
-		"cradle": "*"
+		"cradle": "*",
+		"log4js": "*",
+		"async": "*"
 	},
 	"devDependencies": {},
 	"engines": {

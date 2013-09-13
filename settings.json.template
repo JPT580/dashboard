@@ -1,0 +1,27 @@
+{
+	"general": {
+		//serve https or http?
+		//generate certs in ./snakeoil before activating this
+		"https": false, 
+		"listen": 3000
+	},
+	"https": {
+		"key": "snakeoil/privkey.pem",
+		"cert": "snakeoil/cert.pem",
+	},
+	"couchdb": {
+		"host": "127.0.0.1",
+		"port": 5984,
+		"database": "dashboard",
+		"auth": { //replace with null in case of admin party
+			"username": "admin",
+			"password": "admin"
+		},
+		"cache": true,
+		"raw": false,
+		"secure": false, //access couch via https?
+		"retries": 0,
+		"retryTimeout": 10e3,
+		"headers": {}
+	}
+}
