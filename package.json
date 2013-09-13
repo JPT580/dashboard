@@ -12,12 +12,6 @@
 		"express": "*"
 	},
 	"devDependencies": {},
-	/*
-	"licenses": [{
-		"type": "MIT",
-		"url": "https://raw.github.com/senchalabs/connect/master/LICENSE"
-	}],
-	*/
 	"engines": {
 		"node": ">= 0.8.0"
 	},
