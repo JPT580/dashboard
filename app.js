@@ -53,7 +53,7 @@ if(settings.general.https == true) {
 		"cert": fs.readFileSync(settings.https.cert),
 		"key": fs.readFileSync(settings.https.key)
 	};
-	https.createServer(httpsOptions, app).listen(settings.general.listen);
+	https.createServer(httpsOptions, app).listen(settings.general.listen.port, settings.general.listen.host);
 } else {
-	http.createServer(app).listen(settings.general.listen);
+	http.createServer(app).listen(settings.general.listen.port, settings.general.listen.host);
 }

@@ -2,8 +2,11 @@
 	"general": {
 		//serve https or http?
 		//generate certs in ./snakeoil before activating this
-		"https": false, 
-		"listen": 3000
+		"https": false,
+		"listen": {
+			"host": "localhost",
+			"port": 3000
+		}
 	},
 	"https": {
 		"key": "snakeoil/privkey.pem",
