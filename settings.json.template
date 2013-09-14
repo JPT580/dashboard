@@ -6,7 +6,8 @@
 		"listen": {
 			"host": "localhost",
 			"port": 3000
-		}
+		},
+		"sessionsecret": "Ch4ngeTh1sT0Som3ThingRandom|;-)"
 	},
 	"https": {
 		"key": "snakeoil/privkey.pem",
