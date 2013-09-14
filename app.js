@@ -52,7 +52,7 @@ app.use(function(req, res, next) {
 });
 
 //deliver static files by default
-app.use(express.static(__dirname + '/static'));
+app.use("/", express.static(__dirname + '/static'));
 
 //API: /session
 app.use("/session", function(req, res) {
@@ -101,7 +101,7 @@ app.use(function(err, req, res, next) {
 	res.end();
 });
 
-//fire it up as https (or http) server
+//fire it up as https (or http - NOT recommended(!)) server
 if(settings.general.https == true) {
 	var httpsOptions = {
 		"cert": fs.readFileSync(settings.https.cert),

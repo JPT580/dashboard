@@ -1,5 +1,6 @@
 $(function() {
 
+	//TODO: remove this entirely, allow user to assign own colors!
 	$(".content-container-header").each(function() {
 		$(this).css("background-color", "hsla(" + Math.round(Math.random() * 360) + ", 100%, 50%, 1);");
 	});
