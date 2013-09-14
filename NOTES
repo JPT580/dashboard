@@ -1,0 +1,38 @@
+Development notes
+
+user document:
+{
+	"_id": "%NICKNAME%",
+	"auth": "%SCRYPTHASH%",
+	"email": "%USERMAIL%",
+	"type": "user",
+	"profile": "%COUCHDOCID_PROFILE%"
+}
+
+profile document:
+{
+	"_id": "%COUCHDOCID%",
+	"type": "profile",
+	"foo": "bar"
+}
+
+---
+
+API:
+
+
+GET /user			get user data
+PUT /user			create user
+POST /user			update user
+DELETE /user		delete user
+
+
+GET /profile		retrieve stored profile
+PUT /profile		set whole profile
+POST /profile		update given parts of profile
+DELETE /profile		prune profile data
+
+
+PUT /session		create session with given credentials
+GET /session		get session data
+DELETE /session		destroy session (logout)
