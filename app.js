@@ -17,12 +17,13 @@ var db = couch.database(settings.couchdb.database);
 
 db.exists(function(err, exists) {
 	if(err) {
+		console.log("An error occured - could not talk to couchdb:");
 		console.log(err);
 		process.exit(1);
 	} else if(exists == true) {
 		console.log("Database exists :-)");
 	} else {
-		console.log("Database does not exist!");
+		console.log("Database does not exist :-(");
 		process.exit(1);
 	}
 });
@@ -89,9 +90,15 @@ app.use("/session", function(req, res) {
 	}
 });
 
-//define 404 for everything else (ugly but i think it's useful)
-app.use(function(req, res) {
-	res.status(404).send("Sorry, nothing here.");
+//define 404 for everything else or 500 on error (ugly but i think it's useful)
+app.use(function(err, req, res, next) {
+	if(err) {
+			console.log(err.stack);
+			res.send(500, "Oops, an error occured.");
+	} else {
+		res.send(404, "Sorry, nothing here.");
+	}
+	res.end();
 });
 
 //fire it up as https (or http) server
