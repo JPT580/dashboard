@@ -66,6 +66,7 @@ app.use("/session", function(req, res) {
 			} else {
 				req.session.login = false;
 			}
+		}
 		res.send(200, JSON.stringify({
 			"login": req.session.login
 		}));
