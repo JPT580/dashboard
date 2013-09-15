@@ -1,4 +1,5 @@
 Development notes
+------------------
 
 user document:
 {
@@ -13,26 +14,30 @@ profile document:
 {
 	"_id": "%COUCHDOCID%",
 	"type": "profile",
-	"foo": "bar"
+	"data": {
+		//the object that is handled
+	}
 }
 
----
+API
+----
 
-API:
-
-
-GET /user			get user data
-PUT /user			create user
-POST /user			update user
-DELETE /user		delete user
+GET		retrieve data
+PUT		put a whole dataset (overwrite)
+POST	update a dataset (update given parts only)
+DELETE	delete/destroy something
 
 
-GET /profile		retrieve stored profile
-PUT /profile		set whole profile
-POST /profile		update given parts of profile
-DELETE /profile		prune profile data
+GET		/user		{}							{success, user: {%USER_DOCUMENT%}}
+PUT		/user		{username, password, email}	{success}
+POST	/user		{username, password, email}	{success}
+DELETE	/user		{username, password} 		{success}
 
+GET		/profile	{}							{success, profile: {%PROFILE_DOCUMENT}}
+PUT		/profile	{profile}					{success}
+POST	/profile	{profile}					{success}
+DELETE	/profile	{}							{success}
 
-PUT /session		create session with given credentials
-GET /session		get session data
-DELETE /session		destroy session (logout)
+GET		/session	{}							{success, login}
+PUT		/session	{username, password}		{success}
+DELETE	/session	{}							{success}
