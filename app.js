@@ -7,6 +7,9 @@ var https = require("https");
 var log4js = require("log4js");
 var scrypt = require("scrypt");
 
+//load own tools (tiny functions that help a little ;-)
+var tools = require("./src/Tools.js");
+
 //load settings
 var settings = require("./src/Settings.js");
 
@@ -34,11 +37,11 @@ app.use(express.cookieParser());
 app.use(express.session({
 	"secret": settings.general.sessionsecret
 }));
+app.use(express.bodyParser());
 
 //some logging for debugging
 app.use(function(req, res, next) {
 	console.log("%s %s", req.method, req.url);
-// 	console.log(["Session", req.session]);
 	next();
 });
 
@@ -46,8 +49,14 @@ app.use(function(req, res, next) {
 app.use(function(req, res, next) {
 	if(req.session.initialized != true) {
 		req.session.initialized = true;
-		req.session.login = false;
+		req.session.data = {
+			"user": null,
+			"profile": {},
+			"login": false,
+			"lastActivity": new Date()
+		};
 	}
+	console.log(["Session Data", req.session.data]);
 	next();
 });
 
@@ -60,34 +69,102 @@ app.use("/session", function(req, res) {
 
 	//refresh session
 	if(req.method == "GET") {
-		if(req.session.login == true) {
-			if(new Date() - req.session.lastActivity < 5 * 60 * 1000) {
-				req.session.lastActivity = new Date();
+		if(req.session.data.login == true) {
+			if(new Date() - req.session.data.lastActivity < 5 * 60 * 1000) {
+				req.session.data.lastActivity = new Date();
 			} else {
-				req.session.login = false;
+				req.session.data.login = false;
 			}
 		}
 		res.send(200, JSON.stringify({
-			"login": req.session.login
+			"login": req.session.data.login
 		}));
 	}
 
 	//check user credentials, update session data
 	if(req.method == "PUT") {
-		//TODO: implement proper login mechanism
-		req.session.login = true;
-		req.session.lastActivity = new Date();
+		if(req.session.data.login == true) {
+			res.send(200, JSON.stringify({
+				"success": false
+			}));
+		}
+		var params = req.body;
+		if(tools.reqParamsGiven() == false) {
+			res.send(200, JSON.stringify({
+				"login": req.session.data.login
+			}));
+			return;
+		}
+		req.session.data.login = true;
+		req.session.data.lastActivity = new Date();
 		res.send(200, JSON.stringify({
-			"login": req.session.login
+			"login": req.session.data.login
 		}));
 	}
 
 	//destroy the session
 	if(req.method == "DELETE") {
-		req.session.login = false;
+		req.session.data.login = false;
 		res.send(200, JSON.stringify({
-			"login": req.session.login
+			"login": req.session.data.login
 		}));
+	}
+});
+
+//API: /user
+app.use("/user", function(req, res) {
+	res.setHeader("Content-Type", "application/json");
+	if(req.method == "PUT") {
+		var params = req.body;
+		if(tools.reqParamsGiven(["username", "password", "email"], params) == false) {
+			res.send(500, JSON.stringify({
+				"success": false,
+				"err": "This method needs username, password and email!"
+			}));
+			return;
+		}
+		//check if user already exists
+		db.get(params.username, function (err, doc) {
+			if(!err || err.error != "not_found" || err.reason != "missing") {
+				res.send(200, JSON.stringify({
+					"success": false,
+					"err": "Username already taken!"
+				}));
+				return;
+			}
+			//get: {"0":{"error":"not_found","reason":"missing"}}
+			scrypt.passwordHash(params.password, 10, function(err, pwHash) {
+				var userDoc = {
+					"_id": params.username,
+					"auth": pwHash,
+					"email": params.email,
+					"type": "user"
+				};
+				db.save(userDoc._id, userDoc, function(err, result) {
+					if(err) {
+						res.send(200, JSON.stringify({
+							"success": false,
+							"err": err
+						}));
+					} else {
+						res.send(200, JSON.stringify({
+							"success": true
+						}));
+					}
+				});
+			});
+		});
+	}
+	if(req.method == "GET") {
+		res.send(200, JSON.stringify(req.session.data.user));
+	}
+	if(req.method == "POST") {
+		console.log(req);
+	}
+	if(req.method == "DELETE") {
+		//verify credentials before erasing all data
+		console.log(req);
+
 	}
 });
 
