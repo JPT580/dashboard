@@ -8,6 +8,9 @@ exports.reqParamsGiven = function (keys, obj) {
 		if(value == undefined) {
 			return false;
 		}
+		if(typeof(value) == "string" && value == "") {
+			return false;
+		}
 	}
 	return true;
 }
