@@ -2,22 +2,23 @@ Dashboard
 =========
 
 This project is inspired by the (soon-to-be-shutdown) iGoogle page.
-It contains a simple static html page and some css magic to make it look a little bit better.
-(Also i have started the javascript stuff using jquery ui.)
+It contains a static html page and some javascript + css to make it look better.
+This will become a node.js + couchdb driven application that you can configure and (of course) use.
 
-This will later become a simple and configurable nodejs application,
-that will be extendable with all kinds of widgets like rss readers.
+It will be possible to create an account, login and customize/add/delete the widgets and the background images, re-arrange them and use them to organize e.g. rss-feeds, todo-lists and all kinds of things you can think of.
 
 Getting started
 ---------------
 
-To get started with it, simply clone and call:
+Dependencies: You will need `npm` (node.js) and `couchdb`.
+
+To get started, simply clone this repository and call:
 
 ```
-cp settings.json.template settings.json
-vi settings.json # Do not forget to configure it ;-)
-npm install
-npm start
+cp settings.json.template settings.json # Create your own settings.json from the template
+vi settings.json # Configure it ;-)
+npm install # Install node.js dependencies
+npm start # Start the node.js application.
 ```
 
 
