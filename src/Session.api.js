@@ -10,8 +10,8 @@ var constructor = function(db) {
 		//refresh session and return login status
 		if(req.method == "GET") {
 			if(req.session.data.login == true) {
-				if(new Date() - req.session.data.lastActivity < 5 * 60 * 1000) {
-					req.session.data.lastActivity = new Date();
+				if(new Date() - new Date(req.session.data.lastActivity) < 5 * 60 * 1000) {
+					req.session.data.lastActivity = new Date().toString();
 				} else {
 					req.session.data.login = false;
 				}
@@ -57,7 +57,7 @@ var constructor = function(db) {
 						}
 						if(!err && match == true) {
 							req.session.data.login = true;
-							req.session.data.lastActivity = new Date();
+							req.session.data.lastActivity = new Date().toString();
 							res.send(200, JSON.stringify({
 								"success": true
 							}));

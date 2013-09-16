@@ -57,7 +57,7 @@ app.use(function(req, res, next) {
 			"user": null,
 			"profile": {},
 			"login": false,
-			"lastActivity": new Date()
+			"lastActivity": new Date().toString()
 		};
 	}
 	console.log(["Session Data", req.session.data]);
