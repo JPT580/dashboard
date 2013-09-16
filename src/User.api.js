@@ -49,7 +49,17 @@ var constructor = function(db) {
 		}
 
 		if(req.method == "GET") {
-			res.send(200, JSON.stringify(req.session.data.user));
+			if(req.session.data.login == true) {
+				res.send(200, JSON.stringify({
+					"success": true,
+					"data": req.session.data.user
+				}));
+			} else {
+				res.send(200, JSON.stringify({
+					"success": false,
+					"error": "You are not logged in!"
+				}));
+			}
 		}
 
 		if(req.method == "POST") {
