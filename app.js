@@ -84,13 +84,27 @@ app.use(function(err, req, res, next) {
 	res.end();
 });
 
+//define listening callback function
+var onListenCallback = function() {
+	var url = "";
+	url += (settings.general.https) ? "https://" : "http://";
+	url += settings.general.listen.host;
+	if((settings.general.https && settings.general.listen.port != 443) || (!settings.general.https && settings.general.listen.port != 80)) {
+		url += ":";
+		url += settings.general.listen.port;
+	}
+	url += "/";
+	console.log("Dashboard now listening on: " + url);
+	console.log("Enjoy! ;-)");
+}
+
 //fire it up as https (or http - NOT recommended(!)) server
 if(settings.general.https == true) {
 	var httpsOptions = {
 		"cert": fs.readFileSync(settings.https.cert),
 		"key": fs.readFileSync(settings.https.key)
 	};
-	https.createServer(httpsOptions, app).listen(settings.general.listen.port, settings.general.listen.host);
+	https.createServer(httpsOptions, app).listen(settings.general.listen.port, settings.general.listen.host, onListenCallback);
 } else {
-	http.createServer(app).listen(settings.general.listen.port, settings.general.listen.host);
+	http.createServer(app).listen(settings.general.listen.port, settings.general.listen.host, onListenCallback);
 }
