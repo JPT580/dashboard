@@ -67,8 +67,39 @@ var constructor = function(db) {
 		}
 
 		if(req.method == "DELETE") {
-			//verify credentials before erasing all data
-			console.log(req);
+			if(req.session.data.login == false) {
+				res.send(200, JSON.stringify({
+					"success": false,
+					"err": "You are not logged in!"
+				}));
+				return;
+			}
+			//check if user document exists
+			db.get(req.session.data.user._id, function (err, doc) {
+				console.log(["delete/db.get", arguments]);
+				if(err && err.error == "not_found" && err.reason == "missing") {
+					res.send(200, JSON.stringify({
+						"success": false,
+						"err": "User document does not exist!"
+					}));
+					return;
+				}
+				db.remove(doc._id, doc._rev, function(err, result) {
+					if(err) {
+						res.send(200, JSON.stringify({
+							"success": false,
+							"error": "Could not delete user document!"
+						}));
+					} else {
+						//kill session data, too
+						delete req.session;
+						//TODO: delete profile document here, too!
+						res.send(200, JSON.stringify({
+							"success": true
+						}));
+					}
+				});
+			});
 		}
 	};
 
