@@ -15,6 +15,7 @@ var settings = require("./src/Settings.js");
 
 //load api handler
 var sessionAPIHandler = require("./src/Session.api.js");
+var userAPIHandler = require("./src/User.api.js");
 
 //initialize couch connector
 cradle.setup(settings.couchdb);
@@ -70,61 +71,7 @@ app.use("/", express.static(__dirname + '/static'));
 app.use("/session", new sessionAPIHandler(db));
 
 //API: /user
-app.use("/user", function(req, res) {
-	res.setHeader("Content-Type", "application/json");
-	if(req.method == "PUT") {
-		var params = req.body;
-		if(tools.reqParamsGiven(["username", "password", "email"], params) == false) {
-			res.send(500, JSON.stringify({
-				"success": false,
-				"err": "This method needs username, password and email!"
-			}));
-			return;
-		}
-		//check if user already exists
-		db.get(params.username, function (err, doc) {
-			if(!err || err.error != "not_found" || err.reason != "missing") {
-				res.send(200, JSON.stringify({
-					"success": false,
-					"err": "Username already taken!"
-				}));
-				return;
-			}
-			//get: {"0":{"error":"not_found","reason":"missing"}}
-			scrypt.passwordHash(params.password, 10, function(err, pwHash) {
-				var userDoc = {
-					"_id": params.username,
-					"auth": pwHash,
-					"email": params.email,
-					"type": "user"
-				};
-				db.save(userDoc._id, userDoc, function(err, result) {
-					if(err) {
-						res.send(200, JSON.stringify({
-							"success": false,
-							"err": err
-						}));
-					} else {
-						res.send(200, JSON.stringify({
-							"success": true
-						}));
-					}
-				});
-			});
-		});
-	}
-	if(req.method == "GET") {
-		res.send(200, JSON.stringify(req.session.data.user));
-	}
-	if(req.method == "POST") {
-		console.log(req);
-	}
-	if(req.method == "DELETE") {
-		//verify credentials before erasing all data
-		console.log(req);
-
-	}
-});
+app.use("/user", new userAPIHandler(db));
 
 //define 404 for everything else or 500 on error (ugly but i think it's useful)
 app.use(function(err, req, res, next) {
