@@ -42,6 +42,9 @@ profile document:
 API
 ---
 
+Note: In case of success == false, "error" is added to the response, containing the error message.
+
+
 GET		retrieve data
 PUT		put a whole dataset (overwrite)
 POST	update a dataset (update given parts only)
