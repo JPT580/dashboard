@@ -46,8 +46,9 @@ var constructor = function(db) {
 			db.get(params.username, function (err, doc) {
 				console.log(["dbgetuser", arguments]);
 				if(!err && doc.type == "user") {
+					var userDocument = doc;
 					//user exists, verify password
-					scrypt.verifyHash(doc.auth, params.password, function(err, match) {
+					scrypt.verifyHash(userDocument.auth, params.password, function(err, match) {
 						if(err || match == false) {
 							res.send(200, JSON.stringify({
 								"success": false,
@@ -56,6 +57,7 @@ var constructor = function(db) {
 							return;
 						}
 						if(!err && match == true) {
+							req.session.data.user = userDocument;
 							req.session.data.login = true;
 							req.session.data.lastActivity = new Date().toString();
 							res.send(200, JSON.stringify({
