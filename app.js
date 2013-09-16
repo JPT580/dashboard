@@ -73,13 +73,14 @@ app.use("/session", new sessionAPIHandler(db));
 //API: /user
 app.use("/user", new userAPIHandler(db));
 
-//define 404 for everything else or 500 on error (ugly but i think it's useful)
+//'automatic' error handling and/or responding to non-implemented http calls
+//i know this is ugly as hell, but it might stay for a while.
 app.use(function(err, req, res, next) {
 	if(err) {
 			console.log(err.stack);
 			res.send(500, "Oops, an error occured.");
 	} else {
-		res.send(404, "Sorry, nothing here.");
+		res.send(501, "Method not implemented");
 	}
 	res.end();
 });

@@ -10,7 +10,7 @@ var constructor = function(db) {
 		if(req.method == "PUT") {
 			var params = req.body;
 			if(tools.reqParamsGiven(["username", "password", "email"], params) == false) {
-				res.send(500, JSON.stringify({
+				res.send(200, JSON.stringify({
 					"success": false,
 					"err": "This method needs username, password and email!"
 				}));
