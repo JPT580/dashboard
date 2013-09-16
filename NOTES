@@ -1,4 +1,23 @@
 Development notes
+=================
+
+Session data
+------------
+
+This is a skeleton of what the session data within node.js will look like:
+
+req.session = {
+	"initialized": true,
+	"data": {
+		"user": {}, //see user document
+		"profile": {}, //see profile document .data attribute
+		"login": false,
+		"lastActivity": new Date().toString()
+	}
+};
+
+
+Database documents
 ------------------
 
 user document:
@@ -19,8 +38,9 @@ profile document:
 	}
 }
 
+
 API
-----
+---
 
 GET		retrieve data
 PUT		put a whole dataset (overwrite)
@@ -31,7 +51,7 @@ DELETE	delete/destroy something
 GET		/user		{}							{success, user: {%USER_DOCUMENT%}}
 PUT		/user		{username, password, email}	{success}
 POST	/user		{username, password, email}	{success}
-DELETE	/user		{username, password} 		{success}
+DELETE	/user		{}					 		{success}
 
 GET		/profile	{}							{success, profile: {%PROFILE_DOCUMENT}}
 PUT		/profile	{profile}					{success}
