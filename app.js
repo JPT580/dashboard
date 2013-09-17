@@ -60,7 +60,7 @@ app.use(function(req, res, next) {
 			"lastActivity": new Date().toString()
 		};
 	}
-	console.log(["Session Data", req.session.data]);
+	//console.log(["Session Data", req.session.data]);
 	next();
 });
 

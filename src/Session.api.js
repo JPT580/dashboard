@@ -43,13 +43,13 @@ var constructor = function(db) {
 				return;
 			}
 			//check if user exists
-			db.get(params.username, function (err, doc) {
-				console.log(["dbgetuser", arguments]);
+			db.get(params.username, function(err, doc) {
 				if(!err && doc.type == "user") {
 					var userDocument = doc;
 					//user exists, verify password
 					scrypt.verifyHash(userDocument.auth, params.password, function(err, match) {
 						if(err || match == false) {
+							//password not correct
 							res.send(200, JSON.stringify({
 								"success": false,
 								"error": "Invalid login credentials!"

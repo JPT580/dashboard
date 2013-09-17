@@ -67,7 +67,7 @@ var constructor = function(db) {
 			if(req.session.data.login == false) {
 				res.send(200, JSON.stringify({
 					"success": false,
-					"err": "You are not logged in!"
+					"error": "You are not logged in!"
 				}));
 				return;
 			}
@@ -85,7 +85,7 @@ var constructor = function(db) {
 					console.log(err);
 					res.send(200, JSON.stringify({
 						"success": false,
-						"err": "Something went wrong updating the user document!"
+						"error": "Something went wrong updating the user document!"
 					}));
 				} else {
 					db.get(req.session.data.user._id, function(err, result) {
@@ -93,7 +93,7 @@ var constructor = function(db) {
 							console.log(err);
 							res.send(200, JSON.stringify({
 								"success": false,
-								"err": "Something went wrong re-reading the user document!"
+								"error": "Something went wrong re-reading the user document!"
 							}));
 						} else {
 							req.session.data.user = result;
