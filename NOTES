@@ -58,7 +58,6 @@ DELETE	/user		{}					 		{success}
 
 GET		/profile	{}							{success, profile: {%PROFILE_DOCUMENT}}
 PUT		/profile	{profile}					{success}
-POST	/profile	{profile}					{success}
 DELETE	/profile	{}							{success}
 
 GET		/session	{}							{success, login}
