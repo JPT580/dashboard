@@ -57,13 +57,25 @@ var constructor = function(db) {
 							return;
 						}
 						if(!err && match == true) {
-							req.session.data.user = userDocument;
-							req.session.data.login = true;
-							req.session.data.lastActivity = new Date().toString();
-							res.send(200, JSON.stringify({
-								"success": true
-							}));
-							return;
+							db.get(userDocument.profile, function(err, doc) {
+								if(err) {
+									console.log(err);
+									res.send(200, JSON.stringify({
+										"success": false,
+										"error": "Could not fetch profile document!"
+									}));
+									return;
+								}
+								var profileDocument = doc;
+								req.session.data.user = userDocument;
+								req.session.data.profile = profileDocument.data;
+								req.session.data.login = true;
+								req.session.data.lastActivity = new Date().toString();
+								res.send(200, JSON.stringify({
+									"success": true
+								}));
+								return;
+							});
 						}
 					});
 				} else {

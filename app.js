@@ -16,6 +16,7 @@ var settings = require("./src/Settings.js");
 //load api handler
 var sessionAPIHandler = require("./src/Session.api.js");
 var userAPIHandler = require("./src/User.api.js");
+var profileAPIHandler = require("./src/Profile.api.js");
 
 //initialize couch connector
 cradle.setup(settings.couchdb);
@@ -72,6 +73,9 @@ app.use("/session", new sessionAPIHandler(db));
 
 //API: /user
 app.use("/user", new userAPIHandler(db));
+
+//API: /profile
+app.use("/profile", new profileAPIHandler(db));
 
 //'automatic' error handling and/or responding to non-implemented http calls
 //i know this is ugly as hell, but it might stay for a while.

@@ -12,36 +12,53 @@ var constructor = function(db) {
 			if(tools.reqParamsGiven(["username", "password", "email"], params) == false) {
 				res.send(200, JSON.stringify({
 					"success": false,
-					"err": "This method needs username, password and email!"
+					"error": "This method needs username, password and email!"
 				}));
 				return;
 			}
 			//check if user already exists
 			db.get(params.username, function (err, doc) {
-				if(!err || err.error != "not_found" || err.reason != "missing") {
+				if(!err || err.error != "not_found") {
 					res.send(200, JSON.stringify({
 						"success": false,
-						"err": "Username already taken!"
+						"error": "Username already taken!"
 					}));
 					return;
 				}
 				scrypt.passwordHash(params.password, 10, function(err, pwHash) {
-					var userDoc = {
-						"_id": params.username,
-						"auth": pwHash,
-						"email": params.email,
-						"type": "user"
-					};
-					db.save(userDoc._id, userDoc, function(err, result) {
+					var profileDoc = {
+						"type": "profile",
+						"data": {}
+					}
+					db.save(profileDoc, function(err, result) {
 						if(err) {
+							console.log(err);
 							res.send(200, JSON.stringify({
 								"success": false,
-								"err": err
+								"error": "Could not create profile document!"
 							}));
 						} else {
-							res.send(200, JSON.stringify({
-								"success": true
-							}));
+							var profileID = result.id;
+							var userDoc = {
+								"_id": params.username,
+								"auth": pwHash,
+								"email": params.email,
+								"profile": profileID,
+								"type": "user"
+							};
+							db.save(userDoc._id, userDoc, function(err, result) {
+								if(err) {
+									console.log(err);
+									res.send(200, JSON.stringify({
+										"success": false,
+										"error": "Could not create user document!"
+									}));
+								} else {
+									res.send(200, JSON.stringify({
+										"success": true
+									}));
+								}
+							});
 						}
 					});
 				});
@@ -52,7 +69,7 @@ var constructor = function(db) {
 			if(req.session.data.login == true) {
 				res.send(200, JSON.stringify({
 					"success": true,
-					"data": req.session.data.user
+					"user": req.session.data.user
 				}));
 			} else {
 				res.send(200, JSON.stringify({
@@ -110,33 +127,41 @@ var constructor = function(db) {
 			if(req.session.data.login == false) {
 				res.send(200, JSON.stringify({
 					"success": false,
-					"err": "You are not logged in!"
+					"error": "You are not logged in!"
 				}));
 				return;
 			}
 			//check if user document exists
 			db.get(req.session.data.user._id, function (err, doc) {
-				console.log(["delete/db.get", arguments]);
-				if(err && err.error == "not_found" && err.reason == "missing") {
+				if(err && err.error == "not_found") {
 					res.send(200, JSON.stringify({
 						"success": false,
-						"err": "User document does not exist!"
+						"error": "User document does not exist!"
 					}));
 					return;
 				}
-				db.remove(doc._id, doc._rev, function(err, result) {
+				var userDoc = doc;
+				db.remove(userDoc.profile, function(err, result) {
 					if(err) {
 						res.send(200, JSON.stringify({
 							"success": false,
-							"error": "Could not delete user document!"
+							"error": "Could not delete profile document!"
 						}));
 					} else {
-						//kill session data, too
-						delete req.session;
-						//TODO: delete profile document here, too!
-						res.send(200, JSON.stringify({
-							"success": true
-						}));
+						db.remove(userDoc._id, userDoc._rev, function(err, result) {
+							if(err) {
+								res.send(200, JSON.stringify({
+									"success": false,
+									"error": "Could not delete user document!"
+								}));
+							} else {
+								//kill session data, too
+								delete req.session;
+								res.send(200, JSON.stringify({
+									"success": true
+								}));
+							}
+						});
 					}
 				});
 			});
