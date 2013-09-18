@@ -32,6 +32,7 @@ user document:
 profile document:
 {
 	"_id": "%COUCHDOCID%",
+	"_attachments": {%COUCHATTACHMENTS%}
 	"type": "profile",
 	"data": {
 		//the object that is handled
@@ -59,6 +60,10 @@ DELETE	/user		{}					 		{success}
 GET		/profile	{}							{success, profile: {%PROFILE_DOCUMENT}}
 PUT		/profile	{profile}					{success}
 DELETE	/profile	{}							{success}
+
+GET		/profile/store/%FILENAME%	{}							{success}
+PUT		/profile/store/%FILENAME%	{file}						{success}
+DELETE	/profile/store/%FILENAME%	{}							{success}
 
 GET		/session	{}							{success, login}
 PUT		/session	{username, password}		{success}
